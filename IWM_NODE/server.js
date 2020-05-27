@@ -1,14 +1,20 @@
-let app = require('express')()
+const express = require('express')
+const app = express()
+
 const datas = require('./datas.json')
 const tennisplayers = require('./tennisplayers.json')
+
 const port = 8080
 
-
+// set templating
 app.set('view engine', 'ejs')
+
+// set distribute files
+app.use('/assets', express.static('public'))
 
 // Home with template
 app.get('/', (req, res) => {
-    res.render('pages/index', {
+    res.render('pages/base', {
         test: 'salut'
     })
 })
@@ -33,8 +39,6 @@ app.get('/players/:id', (req, res) => {
 
     result && result !== undefined ? res.json(result) : res.sendStatus(404)
 })
-
-
 
 // Json students
 app.get('/students', (req, res) => {
