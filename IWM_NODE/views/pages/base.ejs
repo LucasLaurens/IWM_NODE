@@ -16,6 +16,11 @@
                     <%= flash.error %>
                 </div>
             <% }  %>
+            <% if (locals.flash && locals.flash.success) { %>
+                <div class="ui positive message">
+                    <%= flash.success %>
+                </div>
+            <% }  %>
             <%- include('./home'); %>
         </div>
     </div>

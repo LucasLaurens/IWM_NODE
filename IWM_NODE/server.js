@@ -1,12 +1,13 @@
 const express = require('express')
 const port = 8080
-const datas = require('./datas.json')
+// const datas = require('./datas.json')
 // const tennisplayers = require('./tennisplayers.json')
 
 let app = express()
 let bodyParser = require('body-parser')
 let session = require('express-session')
-let flash = require('./middleware/flash')
+let flash = require('./middlewares/flash')
+let Message = require('./models/message')
 
 // set templating
 app.set('view engine', 'ejs')
@@ -28,17 +29,33 @@ app.use(flash)
 
 // Home with template
 app.get('/', (req, res) => {
-    res.render('pages/base')
+    Message.all( function (messages) {
+        res.render('pages/base', {
+            messages: messages
+        })
+    })
 })
 
-// Post message in Home
+// Post message in Home (mysql db)
 app.post('/', (req, res) => {
-    if(req.body.message === undefined || req.body.message === '') {
+    if (req.body.message === undefined || req.body.message === '') {
         req.flash('error', "Vous n'avez pas écrit de message")
         res.redirect('/')
+
         // res.render('pages/base', {
         //     error: 'Vous n\'avez pas entré de message'
         // })
+    } else {
+        console.log(req.body.message)
+        try {
+            Message.create(req.body.message, function () {
+                console.log("success")
+                req.flash('success', "Merci !")
+                res.redirect('/')
+            })
+        } catch (e) {
+            console.error(e)
+        }
     }
 })
 
