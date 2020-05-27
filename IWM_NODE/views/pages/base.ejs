@@ -11,12 +11,12 @@
     <div class="ui main container">
         <%- include('./navbar'); %>
         <div  style="margin-top: 7rem;">
-            <%- include('./home'); %>
-            <% if (locals.error) { %>
+            <% if (locals.flash && locals.flash.error) { %>
                 <div class="ui negative message">
-                    <%= error %>
+                    <%= flash.error %>
                 </div>
             <% }  %>
+            <%- include('./home'); %>
         </div>
     </div>
 </body>

@@ -1,13 +1,12 @@
 const express = require('express')
-let app = express()
-let bodyParser = require('body-parser')
-let session = require('express-session')
-
-
+const port = 8080
 // const datas = require('./datas.json')
 // const tennisplayers = require('./tennisplayers.json')
 
-const port = 8080
+let app = express()
+let bodyParser = require('body-parser')
+let session = require('express-session')
+let flash = require('./middleware/flash')
 
 // set templating
 app.set('view engine', 'ejs')
@@ -23,24 +22,19 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: false }
 }))
+app.use(flash)
 
 // Routes
 
 // Home with template
 app.get('/', (req, res) => {
-    console.log(req.session.error)
-    if (req.session.error) {
-        res.locals.error = req.session.error
-        console.log(res.locals.error)
-        req.session.error = undefined
-    }
     res.render('pages/base')
 })
 
 // Post message in Home
 app.post('/', (req, res) => {
     if(req.body.message === undefined || req.body.message === '') {
-        req.session.error = "Vous n'avez pas entré de message"
+        req.flash('error', "Vous n'avez pas écrit de message")
         res.redirect('/')
         // res.render('pages/base', {
         //     error: 'Vous n\'avez pas entré de message'
