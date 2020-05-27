@@ -8,9 +8,16 @@
     <link rel="stylesheet" href="/assets/semantic/semantic.min.css">
 </head>
 <body>
-    <div>
-        <%- include('./home'); %>
-        <%= test %>
+    <div class="ui main container">
+        <%- include('./navbar'); %>
+        <div  style="margin-top: 7rem;">
+            <%- include('./home'); %>
+            <% if (locals.error) { %>
+                <div class="ui negative message">
+                    <%= error %>
+                </div>
+            <% }  %>
+        </div>
     </div>
 </body>
 </html>
