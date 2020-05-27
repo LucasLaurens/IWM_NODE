@@ -12,7 +12,9 @@ app.get('/students', (req, res) => {
 app.get('/students/:lastname', (req, res) => {
     const { lastname } = req.params
     let result = datas.students.filter(student => student.lastname.toUpperCase() === lastname.toUpperCase())
-    res.json(result)
+
+    result && result !== undefined ? res.json(result) : res.sendStatus(404)
+
 })
 
 app.get('/home', (req, res) => {
@@ -24,10 +26,10 @@ app.get('/tableau', (req, res) => {
     res.send(arr)
 })
 
-// app.get('/', (res, res) => {
-//     res.render('pages/index', {
-//         test: 'salut'
-//     })
-// })
+app.get('/', (req, res) => {
+    res.render('pages/index', {
+        test: 'salut'
+    })
+})
 
 app.listen(port)
