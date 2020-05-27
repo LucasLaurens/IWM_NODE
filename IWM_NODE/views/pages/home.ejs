@@ -13,6 +13,7 @@
 
         <div class="comment">
             <div class="content">
+                <a href="/message/<%= message.id %> ">delete</a>
                 <div><%= message.content %></div>
                 <div class="date"><%= message.created_at.fromNow() %></div>
             </div>

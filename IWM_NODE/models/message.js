@@ -7,6 +7,10 @@ class Message {
         this.row = row
     }
 
+    get id () {
+        return this.row.id
+    }
+
     get content () {
         return this.row.content
     }
@@ -41,6 +45,20 @@ class Message {
             }
 
             callback(rows.map(row => new Message(row)))
+        })
+    }
+
+     /**
+     * Delete a messages
+     */
+    static delete (id, callback) {
+        connection.query('DELETE FROM messages WHERE id = ?', [id], (err, result) => {
+
+            if (err) {
+                console.error(err)
+            }
+
+            callback(result)
         })
     }
 

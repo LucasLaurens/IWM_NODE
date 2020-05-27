@@ -49,13 +49,27 @@ app.post('/', (req, res) => {
         console.log(req.body.message)
         try {
             Message.create(req.body.message, function () {
-                console.log("success")
                 req.flash('success', "Merci !")
                 res.redirect('/')
             })
         } catch (e) {
             console.error(e)
         }
+    }
+})
+
+// Delete a message by id
+app.get('/message/:id', function (req, res) {
+
+    const { id } = req.params
+
+    try {
+        Message.delete(id, function () {
+            req.flash('deleted', "Le message a bien été supprimé !")
+            res.redirect('/')
+        })
+    } catch (e) {
+        console.error(e)
     }
 })
 

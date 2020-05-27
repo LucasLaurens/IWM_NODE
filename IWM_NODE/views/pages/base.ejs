@@ -21,6 +21,11 @@
                     <%= flash.success %>
                 </div>
             <% }  %>
+            <% if (locals.flash && locals.flash.deleted) { %>
+                <div class="ui positive message">
+                    <%= flash.deleted %>
+                </div>
+            <% }  %>
             <%- include('./home'); %>
         </div>
     </div>
