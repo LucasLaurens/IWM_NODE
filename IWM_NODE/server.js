@@ -1,6 +1,6 @@
 const express = require('express')
 const port = 8080
-// const datas = require('./datas.json')
+const datas = require('./datas.json')
 // const tennisplayers = require('./tennisplayers.json')
 
 let app = express()
@@ -41,6 +41,24 @@ app.post('/', (req, res) => {
         // })
     }
 })
+
+
+// Manage users
+// app.get('/users', (req, res) => {
+//     res.json(datas)
+// })
+
+// app.post('/new-user', (req, res) => {
+//     let new_data = {
+//         firstname: 'Lucas',
+//         lastname: 'Laurens',
+//         old: 24
+//     }
+
+//     datas.students.push(new_data)
+
+//     res.redirect('/users')
+// })
 
 // Json tennis players
     // app.get('/players', (req, res) => {
