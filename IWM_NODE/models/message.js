@@ -1,5 +1,13 @@
-let connection = require('./config/db')
+let mongoose = require('./config/db')
 let moment = require('moment')
+
+
+let messageSchema = new mongoose.Schema({
+    content: String,
+    created_at: Date
+});
+
+let MessageModel = mongoose.model('messages', messageSchema);
 
 class Message {
 
@@ -19,49 +27,47 @@ class Message {
         return moment(this.row.created_at)
     }
 
-    /**
+   /**
      * Create new message
      */
     static create (content, callback) {
 
-        connection.query('INSERT INTO messages SET content = ?, created_at = ?', [content, new Date()], (err, result) => {
+        const new_message = new MessageModel({
+            message: content,
+            created_at: new Date()
+        });
 
-            if (err) {
+        new_message.save()
+            .then(data => {
+                callback(data)
+            }).catch(err => {
                 console.error(err)
-            }
-
-            callback(result)
-        })
+            })
     }
 
     /**
      * Get all messages
      */
     static all (callback) {
-        connection.query('SELECT * FROM messages', (err, rows) => {
-
-            if (err) {
+        MessageModel.find()
+            .then(messages => {
+                callback(messages.map(msg => new Message(msg)))
+            }).catch(err => {
                 console.error(err)
-            }
-
-            callback(rows.map(row => new Message(row)))
-        })
+            });
     }
 
      /**
      * Delete a messages
      */
     static delete (id, callback) {
-        connection.query('DELETE FROM messages WHERE id = ?', [id], (err, result) => {
-
-            if (err) {
+        MessageModel.findOneAndDelete(id)
+            .then(data => {
+                callback(data)
+            }).catch(err => {
                 console.error(err)
-            }
-
-            callback(result)
-        })
+            });
     }
-
 }
 
 module.exports = Message

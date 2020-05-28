@@ -10,6 +10,7 @@
     "express-session": "^1.17.1",
     "firacode": "^4.0.0",
     "moment": "^2.26.0",
+    "mongoose": "^5.9.16",
     "mysql2": "^2.1.0",
     "nodemon": "^2.0.4"
   },

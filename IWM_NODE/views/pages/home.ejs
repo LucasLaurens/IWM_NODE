@@ -9,16 +9,15 @@
 </form>
 
 <div class="ui comments">
-    <% for(message of messages) { %>
-
-        <div class="comment">
-            <div class="content">
-                <a href="/message/<%= message.id %> ">delete</a>
-                <div><%= message.content %></div>
-                <div class="date"><%= message.created_at.fromNow() %></div>
+    <% if (messages && messages.length > 0) { %>
+        <% for(message of messages) { %>
+            <div class="comment">
+                <div class="content">
+                    <a href="/message/<%= message.id %> ">delete</a>
+                    <div><%= message.content %></div>
+                    <div class="date"><%= message.created_at.fromNow() %></div>
+                </div>
             </div>
-        </div>
-
-
+        <% } %>
     <% } %>
 </div>

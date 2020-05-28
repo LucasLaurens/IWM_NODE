@@ -1,12 +1,10 @@
-let mysql      = require('mysql2');
-let connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'root',
-  database : 'node_iwm_test',
-  port: 8889
-});
+let mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://root:root@iwmnodetest-gbkie.mongodb.net/test', {useNewUrlParser: true, useUnifiedTopology: true});
 
-connection.connect();
+mongoose.connection
+    .once('open', function() {
+        console.log("connected")
+    })
+    .on('error', console.error.bind(console, 'connection error:'));
 
-module.exports = connection
+module.exports = mongoose
